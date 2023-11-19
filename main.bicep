@@ -1,6 +1,3 @@
-@description('Azure region for all resource deployments')
-param location string
-
 @minLength(3)
 @maxLength(24)
 @description('Provide a storage account name, 3-24 lowercase alphanumeric characters. Must be unique across Azure.')
@@ -8,7 +5,7 @@ param storageName string
 
 resource virtualNetwork 'Microsoft.Network/virtualNetworks@2019-11-01' = {
   name: 'Vnet01'
-  location: location
+  location: resourceGroup().location
   properties: {
     addressSpace: {
       addressPrefixes: [
@@ -34,7 +31,7 @@ resource virtualNetwork 'Microsoft.Network/virtualNetworks@2019-11-01' = {
 
 resource storageAccount 'Microsoft.Storage/storageAccounts@2023-01-01' = {
   name: storageName
-  location: location
+  location: resourceGroup().location
   sku: {
     name: 'Standard_LRS'
   }
